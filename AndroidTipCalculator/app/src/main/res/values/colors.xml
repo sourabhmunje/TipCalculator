@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="pizza">#ffffcc</color>
     <color name="restaurant">#cc3300</color>
+    <color name="afterPizza">#ffff00</color>
+    <color name="afterRestaurant">#b32400</color>
 </resources>

@@ -26,9 +26,9 @@ public class PizzaActivity extends AppCompatActivity {
     private float reallyBadWeatherTip = 0;
     private float moreThanThreeMilesTip = 0;
     private float moreThanFiveMilesTip = 0;
-    private float mPoor;
-    private float mCommon;
-    private float mExcellent;
+    private float poorPercent;
+    private float commonPercent;
+    private float excellentPercent;
     private EditText pizzaBillEditText;
     private RadioGroup serviceRadioGroup;
     private RadioButton poorServiceRadioBtn;
@@ -42,6 +42,7 @@ public class PizzaActivity extends AppCompatActivity {
     private CheckBox largeOrderCheckbox;
     private EditText pizzaTipEditText;
     private EditText pizzaTotalEditText;
+    //https://stackoverflow.com/questions/12806278/double-decimal-formatting-in-java
     DecimalFormat df = new DecimalFormat("#0.00");
 
     public static Intent newIntent(Context packageContext) {
@@ -141,49 +142,47 @@ public class PizzaActivity extends AppCompatActivity {
             }
         });
 
-
         minTipCheckbox = (CheckBox) findViewById(R.id.minimumCheckBox);
         largeOrderCheckbox = (CheckBox) findViewById(R.id.largeOrderCheckBox);
         pizzaTipEditText = (EditText) findViewById(R.id.pizzaTipEditText);
         pizzaTotalEditText = (EditText) findViewById(R.id.pizzaTotalEditText);
-
     }
 
     private void EnableLargeOrderMode(){
         poorServiceRadioBtn.setText("Poor 5%");
         commonServiceRadioBtn.setText("Common 10%");
         excellentServiceRadioBtn.setText("Excellent 15%");
-        mPoor = 0.05f;
-        mCommon = 0.10f;
-        mExcellent = 0.15f;
+        poorPercent = 0.05f;
+        commonPercent = 0.10f;
+        excellentPercent = 0.15f;
         largeOrderCheckbox.setChecked(true);
     }
     public void EnableSmallOrderMode(){
         poorServiceRadioBtn.setText("Poor 10%");
         commonServiceRadioBtn.setText("Common 15%");
         excellentServiceRadioBtn.setText("Excellent 20%");
-        mPoor = 0.10f;
-        mCommon = 0.15f;
-        mExcellent = 0.20f;
+        poorPercent = 0.10f;
+        commonPercent = 0.15f;
+        excellentPercent = 0.20f;
         largeOrderCheckbox.setChecked(false);
     }
 
     private void calculateTip(int serviceCategory){
         selectedServiceRadioBtn = serviceCategory;
         if(serviceCategory == poorServiceRadioBtn.getId()){
-            serviceTip = pizzaCost * mPoor;
+            serviceTip = pizzaCost * poorPercent;
         }
         else if(serviceCategory == commonServiceRadioBtn.getId()){
-            serviceTip = pizzaCost * mCommon;
+            serviceTip = pizzaCost * commonPercent;
         }
         else if(serviceCategory == excellentServiceRadioBtn.getId()){
-            serviceTip = pizzaCost * mExcellent;
+            serviceTip = pizzaCost * excellentPercent;
         }
 
         pizzaTip = serviceTip + badWeatherTip + reallyBadWeatherTip + moreThanThreeMilesTip + moreThanFiveMilesTip;
-        pizzaTipEditText.setText("$"+df.format(pizzaTip));
+        pizzaTipEditText.setText("$ " + df.format(pizzaTip));
         float pizzaTotal = pizzaCost + pizzaTip;
-        pizzaTotalEditText.setText("$"+df.format(pizzaTotal));
+        pizzaTotalEditText.setText("$ " + df.format(pizzaTotal));
 
       //  serviceTip = (pizzaCost == 0)? 0 : ((serviceTip < 3) ? 3:serviceTip);
 
@@ -192,23 +191,23 @@ public class PizzaActivity extends AppCompatActivity {
                // isLessThanMin = true;
                 minTipCheckbox.setChecked(true);
                 pizzaTip = 3 + badWeatherTip + reallyBadWeatherTip + moreThanThreeMilesTip + moreThanFiveMilesTip;
-                pizzaTipEditText.setText("$"+df.format(pizzaTip));
+                pizzaTipEditText.setText("$ "+ df.format(pizzaTip));
                 pizzaTotal = pizzaCost + pizzaTip;
-                pizzaTotalEditText.setText("$"+df.format(pizzaTotal));
-                pizzaTipEditText.setText("$"+df.format(pizzaTip));
+                pizzaTotalEditText.setText("$ " + df.format(pizzaTotal));
+                pizzaTipEditText.setText("$ " + df.format(pizzaTip));
             } else if(serviceTip>=3){
                 minTipCheckbox.setChecked(false);
                 pizzaTip = serviceTip + badWeatherTip + reallyBadWeatherTip + moreThanThreeMilesTip + moreThanFiveMilesTip;
-                pizzaTipEditText.setText("$"+df.format(pizzaTip));
+                pizzaTipEditText.setText("$ " + df.format(pizzaTip));
                 pizzaTotal = pizzaCost + pizzaTip;
-                pizzaTotalEditText.setText("$"+df.format(pizzaTotal));
-                pizzaTipEditText.setText("$"+df.format(pizzaTip));
+                pizzaTotalEditText.setText("$ " + df.format(pizzaTotal));
+                pizzaTipEditText.setText("$ " + df.format(pizzaTip));
             }
         }else{
             minTipCheckbox.setChecked(false);
             serviceTip = 0;
-            pizzaTotalEditText.setText("$"+df.format(0));
-            pizzaTipEditText.setText("$"+df.format(0));
+            pizzaTotalEditText.setText("$ " + df.format(0));
+            pizzaTipEditText.setText("$ " + df.format(0));
         }
 
     }

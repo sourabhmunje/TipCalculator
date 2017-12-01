@@ -69,11 +69,11 @@ public class RestaurantActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String initialBill = initialBillEditText.getText().toString();
                 totalBillPreTax = (!initialBill.isEmpty() && initialBill != null) ? Double.parseDouble(initialBill) : 0;
-                totalTipEditText.setText("$"+df.format(totalBillPreTax * (((double)seekValue)/100)));
+                totalTipEditText.setText("$ " + df.format(totalBillPreTax * (((double)seekValue)/100)));
                 totalTipAmount = Double.parseDouble(totalTipEditText.getText().toString().replace("$",""));
-                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                totalBillEditText.setText("$ " + df.format(totalBillPreTax + totalTipAmount + totalTax));
                 grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
-                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
+                splitBillEditText.setText("$ " + df.format(grandTotal/splitSpinnerValue));
             }
         });
 
@@ -82,12 +82,12 @@ public class RestaurantActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 seekValue = progress + 15;
                 percentTextView.setText(seekValue+"%");
-                totalTipEditText.setText("$"+df.format(totalBillPreTax * (((double)seekValue)/100)));
+                totalTipEditText.setText("$ " + df.format(totalBillPreTax * (((double)seekValue)/100)));
                 String totalTip = totalTipEditText.getText().toString().replace("$","");
                 totalTipAmount = (totalTip != null && !totalTip.isEmpty()) ? Double.parseDouble(totalTip) : 0;
-                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                totalBillEditText.setText("$ " + df.format(totalBillPreTax + totalTipAmount + totalTax));
                 grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
-                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
+                splitBillEditText.setText("$ " + df.format(grandTotal/splitSpinnerValue));
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -102,9 +102,9 @@ public class RestaurantActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String tax = taxEditText.getText().toString();
                 totalTax = (tax != null && !tax.isEmpty()) ? Double.parseDouble(tax) : 0;
-                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                totalBillEditText.setText("$ " + df.format(totalBillPreTax + totalTipAmount + totalTax));
                 grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
-                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
+                splitBillEditText.setText("$ " + df.format(grandTotal/splitSpinnerValue));
             }
 
             @Override
@@ -120,7 +120,7 @@ public class RestaurantActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 splitSpinnerValue = Integer.parseInt(splitSpinner.getSelectedItem().toString());
-                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
+                splitBillEditText.setText("$ " + df.format(grandTotal/splitSpinnerValue));
             }
 
             @Override
