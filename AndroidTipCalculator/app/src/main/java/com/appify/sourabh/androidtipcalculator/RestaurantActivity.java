@@ -17,123 +17,77 @@ import java.text.DecimalFormat;
 
 public class RestaurantActivity extends AppCompatActivity {
 
-
-    DecimalFormat df = new DecimalFormat("#0.00");
-
-    private EditText mBillEditText;
-    private EditText mTaxEditText;
-    private EditText mSplitAmountEditText;
-    private SeekBar mTipSeekBar;
-    private EditText mTotalTipEditText;
-    private TextView mPercentTextView;
-    private EditText mTotalEditText;
-    private Spinner mSplitSpinner;
-
     private double totalBillPreTax = 0.0;
     private int seekValue = 16;
-    private double total_tip_amount = 0.0;
-    private double total_tax = 0;
-    private double grand_total = 0;
-    private int split_spinner_value = 1;
+    private double totalTipAmount = 0.0;
+    private double totalTax = 0;
+    private double grandTotal = 0;
+    private int splitSpinnerValue = 1;
+    private EditText initialBillEditText;
+    private EditText taxEditText;
+    private EditText splitBillEditText;
+    private SeekBar tipSeekBar;
+    private EditText totalTipEditText;
+    private TextView percentTextView;
+    private EditText totalBillEditText;
+    private Spinner splitSpinner;
+    DecimalFormat df = new DecimalFormat("#0.00");
 
     public static Intent newIntent(Context packageContext) {
         Intent i = new Intent(packageContext, RestaurantActivity.class);
         return i;
     }
 
-    private double updateTipAmount(double totalBillPreTax, double seekValue){
-        double total_tip_amount = totalBillPreTax*(seekValue/100);
-        return total_tip_amount;
-    }
-
-    private double updateGrandTotal(double totalBillPreTax, double total_tip_amount, double total_tax){
-        double grand_total = totalBillPreTax + total_tip_amount + total_tax;
-        return grand_total;
-    }
-
-    private double updateSplitAmount(double grand_total, double split_spinner_value){
-        double split_amount = grand_total/split_spinner_value;
-        return split_amount;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
-        mBillEditText = (EditText) findViewById(R.id.billEditText);
-        mPercentTextView = (TextView) findViewById(R.id.percentTextView);
-        mTipSeekBar = (SeekBar)findViewById(R.id.tipSeekBar);
-        mTipSeekBar.setMax(10);
-        mTipSeekBar.incrementProgressBy(1);
-        seekValue = mTipSeekBar.getProgress() + 15;
-
-        mTotalTipEditText = (EditText) findViewById(R.id.totalTipEditText);
-        mTaxEditText = (EditText) findViewById(R.id.taxEditText);
-        mTotalEditText = (EditText) findViewById(R.id.totalEditText);
-
-        mSplitSpinner = (Spinner) findViewById(R.id.splitSpinner);
-        mSplitAmountEditText = (EditText) findViewById(R.id.splitAmountEditText);
-
-        totalBillPreTax = Double.parseDouble(mBillEditText.getText().toString());
-        total_tip_amount = Double.parseDouble(mTotalTipEditText.getText().toString().replace("$",""));
-        total_tax = Double.parseDouble(mTaxEditText.getText().toString());
-        grand_total = totalBillPreTax + total_tip_amount + total_tax;
-        split_spinner_value = Integer.parseInt(mSplitSpinner.getSelectedItem().toString());
-
-        mBillEditText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String mBET = mBillEditText.getText().toString();
-                if(mBET != null && !mBET.isEmpty()){
-                    totalBillPreTax = Double.parseDouble(mBET);
-                } else {
-                    totalBillPreTax = 0;
-                }
-                double updatedTipAmount = updateTipAmount(totalBillPreTax,seekValue);
-                mTotalTipEditText.setText("$"+df.format(updatedTipAmount));
-                total_tip_amount = Double.parseDouble(mTotalTipEditText.getText().toString().replace("$",""));
-
-                double updatedGrandTotal = updateGrandTotal(totalBillPreTax, total_tip_amount, total_tax);
-                mTotalEditText.setText("$"+df.format(updatedGrandTotal));
-                grand_total = Double.parseDouble(mTotalEditText.getText().toString().replace("$",""));
-
-                double updatedSplitAmount = updateSplitAmount(grand_total,split_spinner_value);
-                mSplitAmountEditText.setText("$"+df.format(updatedSplitAmount));
-            }
-
+        initialBillEditText = (EditText) findViewById(R.id.initialBillEditText);
+        percentTextView = (TextView) findViewById(R.id.percentTextView);
+        totalTipEditText = (EditText) findViewById(R.id.totalTipEditText);
+        taxEditText = (EditText) findViewById(R.id.taxEditText);
+        totalBillEditText = (EditText) findViewById(R.id.totalEditText);
+        tipSeekBar = (SeekBar)findViewById(R.id.tipSeekBar);
+        tipSeekBar.setMax(10);
+        tipSeekBar.incrementProgressBy(1);
+        seekValue = tipSeekBar.getProgress() + 15;
+        splitSpinner = (Spinner) findViewById(R.id.splitSpinner);
+        splitBillEditText = (EditText) findViewById(R.id.splitAmountEditText);
+        totalBillPreTax = Double.parseDouble(initialBillEditText.getText().toString());
+        totalTipAmount = Double.parseDouble(totalTipEditText.getText().toString().replace("$",""));
+        totalTax = Double.parseDouble(taxEditText.getText().toString());
+        grandTotal = totalBillPreTax + totalTipAmount + totalTax;
+        splitSpinnerValue = Integer.parseInt(splitSpinner.getSelectedItem().toString());
+        initialBillEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //mTotalEditText.setText(mBillEditText.getText());
             }
-
             @Override
             public void afterTextChanged(Editable s){
-                //mTotalEditText.setText(mBillEditText.getText());
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String initialBill = initialBillEditText.getText().toString();
+                totalBillPreTax = (!initialBill.isEmpty() && initialBill != null) ? Double.parseDouble(initialBill) : 0;
+                totalTipEditText.setText("$"+df.format(totalBillPreTax * (((double)seekValue)/100)));
+                totalTipAmount = Double.parseDouble(totalTipEditText.getText().toString().replace("$",""));
+                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
+                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
             }
         });
 
-        mTipSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChanged = 0;
-
+        tipSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            //https://developer.android.com/reference/android/widget/SeekBar.OnSeekBarChangeListener.html
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 seekValue = progress + 15;
-                mPercentTextView.setText(seekValue+"%");
-                double updatedTipAmount = updateTipAmount(totalBillPreTax,seekValue);
-                mTotalTipEditText.setText("$"+df.format(updatedTipAmount));
-
-                String mTTET = mTotalTipEditText.getText().toString().replace("$","");
-                if(mTTET != null && !mTTET.isEmpty()){
-                    total_tip_amount = Double.parseDouble(mTTET);
-                } else {
-                    total_tip_amount = 0;
-                }
-                double updatedGrandTotal = updateGrandTotal(totalBillPreTax, total_tip_amount, total_tax);
-                mTotalEditText.setText("$"+df.format(updatedGrandTotal));
-                grand_total = Double.parseDouble(mTotalEditText.getText().toString().replace("$",""));
-
-                double updatedSplitAmount = updateSplitAmount(grand_total,split_spinner_value);
-                mSplitAmountEditText.setText("$"+df.format(updatedSplitAmount));
+                percentTextView.setText(seekValue+"%");
+                totalTipEditText.setText("$"+df.format(totalBillPreTax * (((double)seekValue)/100)));
+                String totalTip = totalTipEditText.getText().toString().replace("$","");
+                totalTipAmount = (totalTip != null && !totalTip.isEmpty()) ? Double.parseDouble(totalTip) : 0;
+                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
+                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -143,23 +97,14 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mTaxEditText.addTextChangedListener(new TextWatcher() {
-
+        taxEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                String mTET = mTaxEditText.getText().toString();
-                if(mTET != null && !mTET.isEmpty()){
-                    total_tax = Double.parseDouble(mTET);
-                } else {
-                    total_tax = 0;
-                }
-                double updatedGrandTotal = updateGrandTotal(totalBillPreTax, total_tip_amount, total_tax);
-                mTotalEditText.setText("$"+df.format(updatedGrandTotal));
-                grand_total = Double.parseDouble(mTotalEditText.getText().toString().replace("$",""));
-
-                double updatedSplitAmount = updateSplitAmount(grand_total,split_spinner_value);
-                mSplitAmountEditText.setText("$"+df.format(updatedSplitAmount));
+                String tax = taxEditText.getText().toString();
+                totalTax = (tax != null && !tax.isEmpty()) ? Double.parseDouble(tax) : 0;
+                totalBillEditText.setText("$"+df.format(totalBillPreTax + totalTipAmount + totalTax));
+                grandTotal = Double.parseDouble(totalBillEditText.getText().toString().replace("$",""));
+                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
             }
 
             @Override
@@ -171,36 +116,18 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mSplitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        splitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                split_spinner_value = Integer.parseInt(mSplitSpinner.getSelectedItem().toString());
-                double updatedSplitAmount = updateSplitAmount(grand_total,split_spinner_value);
-                mSplitAmountEditText.setText("$"+df.format(updatedSplitAmount));
+                splitSpinnerValue = Integer.parseInt(splitSpinner.getSelectedItem().toString());
+                splitBillEditText.setText("$"+df.format(grandTotal/splitSpinnerValue));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
+
 }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_restaurant);
-//    }
-//}

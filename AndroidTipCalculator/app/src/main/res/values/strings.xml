@@ -1,14 +1,16 @@
 <resources>
+    <string name="pizza_tooltip">Calculate the tip for your pizza.</string>
+    <string name="restaurant_tooltip">Calculate the tip for your restaurant bill.</string>
     <string name="app_name">Tip Calculator</string>
     <string name="btn1">Restaurant</string>
     <string name="btn2">Pizza Delivery</string>
-    <string name="total_bill">Total Bill</string>
-    <string name="tip_percent">Tip Percent</string>
-    <string name="total_tip">Total Tip Amount</string>
     <string name="total_tax">Total Tax</string>
     <string name="grand_total">Grand Total</string>
     <string name="ways_to_split">How many ways to split?</string>
-    <string-array name="split_values">
+    <string name="total_bill">Total Bill(pre-tax)</string>
+    <string name="tip_percent">Tip Percent</string>
+    <string name="total_tip">Total Tip Amount</string>
+    <string-array name="splitValues">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -26,4 +28,6 @@
     <string name="more_than_5miles">More than 5 miles? +$2</string>
     <string name="minimum_tipping_rule">Minimum tipping rule. $3</string>
     <string name="large_order">Large Order($100+) tipping rule. Common 10% </string>
+    <string name="restaurantHeading">Restaurant Tip</string>
+    <string name="pizzaHeading">Pizza Delivery Tip</string>
 </resources>

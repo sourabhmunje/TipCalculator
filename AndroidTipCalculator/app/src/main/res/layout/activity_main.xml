@@ -12,13 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/btn1" />
+        android:text="@string/btn1"
+        android:background="@color/restaurant"
+        android:textSize="30dp"
+        android:textStyle="italic"
+        android:tooltipText="@string/restaurant_tooltip"/>
 
     <Button
         android:id="@+id/pizzaButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/btn2" />
+        android:text="@string/btn2"
+        android:background="@color/pizza"
+        android:textSize="30dp"
+        android:textStyle="italic"
+        android:tooltipText="@string/pizza_tooltip"/>
 
 </LinearLayout>

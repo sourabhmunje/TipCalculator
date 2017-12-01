@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.appify.sourabh.androidtipcalculator.RestaurantActivity">
+    tools:context="com.appify.sourabh.androidtipcalculator.RestaurantActivity"
+    android:background="@color/restaurant">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,20 +15,35 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/headingTextView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_margin="16dp"
+            android:text="@string/restaurantHeading"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/totalBillTextView"
+                android:id="@+id/initialBillTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:text="@string/total_bill"/>
             <EditText
-                android:id="@+id/billEditText"
-                style="@style/EditTextStyle"/>
-
+                android:id="@+id/initialBillEditText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="16dp"
+                android:text="0"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:gravity="right"/>
         </LinearLayout>
 
         <LinearLayout
@@ -36,9 +52,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tipPercentTextView"
+                android:id="@+id/percentPlaceholderTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:text="@string/tip_percent"/>
 
@@ -46,7 +63,8 @@
                 android:id="@+id/percentTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_toRightOf="@id/tipPercentTextView"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/percentPlaceholderTextView"
                 android:layout_margin="16dp"
                 android:text="16%"/>
 
@@ -55,13 +73,13 @@
                 android:layout_height="wrap_content">
                 <SeekBar
                     android:id="@+id/tipSeekBar"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:splitTrack="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:textStyle="bold"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"/>
-
                 <TextView
                     android:id="@+id/fifteenPercent"
                     android:layout_height="wrap_content"
@@ -69,12 +87,14 @@
                     android:layout_margin="16dp"
                     android:layout_alignParentLeft="@id/tipSeekBar"
                     android:layout_below="@id/tipSeekBar"
+                    android:textStyle="bold"
                     android:text="15%"/>
 
                 <TextView
-                    android:id="@+id/twentyFivePercent"
+                    android:id="@+id/twentyfivePercent"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:textStyle="bold"
                     android:layout_margin="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/tipSeekBar"
@@ -88,52 +108,84 @@
                 android:id="@+id/totalTipTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:text="@string/total_tip"/>
             <EditText
                 android:id="@+id/totalTipEditText"
-                style="@style/NonEditTextStyle"/>
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="16dp"
+                android:text="$0.00"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TextView
                 android:id="@+id/taxTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:text="@string/total_tax"/>
-
             <EditText
                 android:id="@+id/taxEditText"
-                style="@style/EditTextStyle"/>
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="16dp"
+                android:text="0"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:gravity="right" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/totalTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:text="@string/grand_total"/>
             <EditText
                 android:id="@+id/totalEditText"
-                style="@style/NonEditTextStyle"/>
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="16dp"
+                android:text="$0.00"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/split"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:text="@string/ways_to_split"
                 android:layout_weight="1"/>
@@ -141,8 +193,9 @@
                 android:id="@+id/splitSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
-                android:entries="@array/split_values"></Spinner>
+                android:entries="@array/splitValues"></Spinner>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,12 +204,24 @@
                 android:id="@+id/splitAmountTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:text="@string/split_amount"/>
             <EditText
                 android:id="@+id/splitAmountEditText"
-                style="@style/NonEditTextStyle"/>
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="16dp"
+                android:text="0"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
